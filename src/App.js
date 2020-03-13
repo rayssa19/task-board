@@ -13,7 +13,16 @@ export default class App extends Component {
     return (
       <div className="painel-todo">
         <h3>FAZER</h3>
-        <TodoList items={this.state.items} />
+        {this.state.items.map((item, index) => (
+          
+        <div key={item.id} className="grid-task">
+          <TodoList items={this.state.items} itemTxt={item.text}/>
+            <div className="remove">
+              <button onClick={() => this.remove(index)} index={index} className="btn-remove">x</button>
+            </div>
+        </div>
+        ))}
+        
         <div>
         <form onSubmit={this.handleSubmit}>
           <label className="justify-content-center" htmlFor="new-todo">
@@ -29,11 +38,13 @@ export default class App extends Component {
           </div>
 
           <div className="justify-content-center">
-          <button>Adicionar</button>
+          <button className="btn-black">ADICIONAR</button>
           </div>
 
           <div>
-          Você tem {this.state.items.length + 0} tarefas para serem concluídas
+            <p className="text">
+              Você tem {this.state.items.length + 0} tarefas para serem concluídas
+            </p>
           </div>
 
         </form>
@@ -57,20 +68,25 @@ export default class App extends Component {
     };
     this.setState(state => ({
       items: state.items.concat(newItem),
-      text: ''
+      text:''
+    }));
+  }
+
+  remove(e){
+    console.log(e);
+    this.setState(state => ({
+      items: state.items.splice(e, 0),
+      text:''
     }));
   }
 }
 
-class TodoList extends React.Component {
+class TodoList extends Component {
   render() {
     return (
-      <ul>
-        {this.props.items.map(item => (
-          <div className="task" key={item.id}>{item.text}</div>
-        ))}
-      </ul>
+        <ul>
+          <div className="task">{this.props.itemTxt}</div>
+        </ul>
     );
   }
 }
-
