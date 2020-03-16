@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './css/style.css'
+import './css/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -12,24 +13,19 @@ export default class App extends Component {
   render() {
     return (
       <div className="painel-todo">
-        <h3>FAZER</h3>
-        {this.state.items.map((item, index) => (
-          
-        <div key={item.id} className="grid-task">
-          <TodoList items={this.state.items} itemTxt={item.text}/>
-            <div className="remove">
-              <button onClick={() => this.remove(index)} index={index} className="btn-remove">x</button>
-            </div>
-        </div>
-        ))}
+        <div className="todo">
+          <div className="d-flex justify-content-center">
+            <h3>FAZER</h3>
+          </div>
+          <div>
         
-        <div>
         <form onSubmit={this.handleSubmit}>
-          <label className="justify-content-center" htmlFor="new-todo">
+        
+          <label className="d-flex justify-content-center" htmlFor="new-todo">
             O que precisa ser feito?
           </label>
 
-          <div className="justify-content-center">
+          <div className="text-center">
           <input 
             id="new-todo"
             onChange={this.handleChange}
@@ -37,17 +33,23 @@ export default class App extends Component {
           />
           </div>
 
-          <div className="justify-content-center">
+          <div className="text-center">
           <button className="btn-black">ADICIONAR</button>
           </div>
 
           <div>
-            <p className="text">
+            <p className="text-center">
               Você tem {this.state.items.length + 0} tarefas para serem concluídas
             </p>
           </div>
-
         </form>
+        </div>
+        {this.state.items.map((item, index) => (
+          
+        <div key={item.id} className="grid-task">
+          <TodoList items={this.state.items} index={index} itemTxt={item.text}/>
+        </div>
+        ))}
         </div>
       </div>
     );
@@ -62,6 +64,7 @@ export default class App extends Component {
     if (this.state.text.length === 0) {
       return;
     }
+    console.log(this.state.text);
     const newItem = {
       text: this.state.text,
       id: Date.now()
@@ -71,21 +74,23 @@ export default class App extends Component {
       text:''
     }));
   }
-
-  remove(e){
-    console.log(e);
-    this.setState(state => ({
-      items: state.items.splice(e, 0),
-      text:''
-    }));
-  }
 }
 
 class TodoList extends Component {
+  handleDelete = itemId => {
+    const items = this.state.items.filter(item => this.state.items.indexOf(item) !== itemId);
+    this.setState({ items: items });
+    console.log(items);
+    return;
+  }
   render() {
     return (
         <ul>
-          <div className="task">{this.props.itemTxt}</div>
+          <div className="task" onMouseMove={this.handleMouseMove}>{this.props.itemTxt}</div>
+
+          <div className="remove">
+              <button onClick={() => this.handleDelete(this.props.index)} index={this.props.index} className="btn-remove">x</button>
+            </div>
         </ul>
     );
   }
