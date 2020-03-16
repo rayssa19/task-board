@@ -47,7 +47,10 @@ export default class App extends Component {
         {this.state.items.map((item, index) => (
           
         <div key={item.id} className="grid-task">
-          <TodoList items={this.state.items} index={index} itemTxt={item.text}/>
+          <TodoList items={this.state.items} itemTxt={item.text}/>
+            <div className="remove">
+              <button onClick={() => this.handleDelete(index)} index={index} className="btn-remove">x</button>
+            </div>
         </div>
         ))}
         </div>
@@ -74,23 +77,20 @@ export default class App extends Component {
       text:''
     }));
   }
-}
 
-class TodoList extends Component {
   handleDelete = itemId => {
     const items = this.state.items.filter(item => this.state.items.indexOf(item) !== itemId);
     this.setState({ items: items });
     console.log(items);
     return;
   }
+}
+
+class TodoList extends Component {
   render() {
     return (
         <ul>
           <div className="task" onMouseMove={this.handleMouseMove}>{this.props.itemTxt}</div>
-
-          <div className="remove">
-              <button onClick={() => this.handleDelete(this.props.index)} index={this.props.index} className="btn-remove">x</button>
-            </div>
         </ul>
     );
   }
