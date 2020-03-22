@@ -44,15 +44,16 @@ export default class App extends Component {
           </div>
         </form>
         </div>
-        {this.state.items.map((item, index) => (
-          
-        <div key={item.id} className="grid-task">
-          <TodoList items={this.state.items} itemTxt={item.text}/>
-            <div className="remove">
-              <button onClick={() => this.handleDelete(index)} index={index} className="btn-remove">x</button>
-            </div>
+        <div className="row d-flex justify-content-center">
+         {this.state.items.map((item, index) => (
+          <div key={item.id} className="">
+            <TodoList items={this.state.items} itemTxt={item.text}/>
+              <div className="remove">
+               <button onClick={() => this.handleDelete(index)} index={index} className="btn-remove">x</button>
+              </div>
+         </div>
+         ))}
         </div>
-        ))}
         </div>
       </div>
     );
@@ -89,8 +90,17 @@ export default class App extends Component {
 class TodoList extends Component {
   render() {
     return (
-        <ul>
-          <div className="task" onMouseMove={this.handleMouseMove}>{this.props.itemTxt}</div>
+        <ul className="boards-sub-tasks">
+          <li className="board-sub-task-wrapper">
+            <div className="board-sub-task board-sub-task--high-priority">
+              <div className="board-sub-task-head">
+                <span className="board-sub-task-title">{this.props.itemTxt}</span>
+              </div>
+              <div className="board-sub-task-footer">
+                <span>4 hours</span>
+              </div>
+            </div>
+          </li>
         </ul>
     );
   }
