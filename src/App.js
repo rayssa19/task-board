@@ -12,50 +12,51 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="painel-todo">
-        <div className="todo">
-          <div className="d-flex justify-content-center">
-            <h3>FAZER</h3>
-          </div>
-          <div>
-        
-        <form onSubmit={this.handleSubmit}>
-        
-          <label className="d-flex justify-content-center" htmlFor="new-todo">
-            O que precisa ser feito?
-          </label>
+        <div className="painel-todo">
+          <div className="todo">
+            <div className="d-flex justify-content-center">
+              <h3>FAZER</h3>
+            </div>
+            <div>
 
-          <div className="text-center">
-          <input 
-            id="new-todo"
-            onChange={this.handleChange}
-            value={this.state.text}
-          />
-          </div>
+              <form onSubmit={this.handleSubmit}>
 
-          <div className="text-center">
-          <button className="btn-black">ADICIONAR</button>
-          </div>
+                <label className="d-flex justify-content-center" htmlFor="new-todo">
+                  O que precisa ser feito?
+                </label>
 
-          <div>
-            <p className="text-center">
-              Você tem {this.state.items.length + 0} tarefas para serem concluídas
-            </p>
+                <div className="text-center">
+                  <input
+                      id="new-todo"
+                      onChange={this.handleChange}
+                      value={this.state.text}
+                  />
+                  <button className="btn-black">+</button>
+                </div>
+
+                <div className="text-center">
+
+                </div>
+
+                <div>
+                  <p className="text-center">
+                    Você tem {this.state.items.length + 0} tarefas para serem concluídas
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div className="row d-flex justify-content-center">
+              {this.state.items.map((item, index) => (
+                  <div key={item.id} className="">
+                    <TodoList items={this.state.items} itemTxt={item.text}/>
+                    <div className="remove">
+                      <button onClick={() => this.handleDelete(index)} index={index} className="btn-remove">excluir nota</button>
+                    </div>
+                  </div>
+              ))}
+            </div>
           </div>
-        </form>
         </div>
-        <div className="row d-flex justify-content-center">
-         {this.state.items.map((item, index) => (
-          <div key={item.id} className="">
-            <TodoList items={this.state.items} itemTxt={item.text}/>
-              <div className="remove">
-               <button onClick={() => this.handleDelete(index)} index={index} className="btn-remove">x</button>
-              </div>
-         </div>
-         ))}
-        </div>
-        </div>
-      </div>
     );
   }
 
